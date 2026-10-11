@@ -1,0 +1,16 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Az alkalmazás alap témája. -->
+    <style name="Theme.Km" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Elsődleges márkaszín. -->
+        <item name="colorPrimary">@color/purple_200</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/black</item>
+        <!-- Másodlagos márkaszín. -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_200</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Állapotsor színe. -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- Itt szabhatod testre a témát. -->
+    </style>
+</resources>

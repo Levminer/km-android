@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+   Minta biztonsági mentési szabályfájl; szükség szerint vedd ki a megjegyzésből és szabd testre.
+   Lásd: https://developer.android.com/guide/topics/data/autobackup
+   a részletekért.
+   Megjegyzés: az API 31-nél régebbi eszközök ezt a fájlt figyelmen kívül hagyják
+   Lásd: https://developer.android.com/about/versions/12/backup-restore
+-->
+<full-backup-content>
+    <!--
+   <include domain="sharedpref" path="."/>
+   <exclude domain="sharedpref" path="device.xml"/>
+-->
+</full-backup-content>

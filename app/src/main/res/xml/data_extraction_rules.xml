@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+   Minta adatkinyerési szabályfájl; szükség szerint vedd ki a megjegyzésből és szabd testre.
+   Lásd: https://developer.android.com/about/versions/12/backup-restore#xml-changes
+   a részletekért.
+-->
+<data-extraction-rules>
+    <cloud-backup>
+        <!-- TODO: Az <include> és <exclude> elemekkel szabályozható, mi kerüljön mentésre.
+        <include .../>
+        <exclude .../>
+        -->
+    </cloud-backup>
+    <!--
+    <device-transfer>
+        <include .../>
+        <exclude .../>
+    </device-transfer>
+    -->
+</data-extraction-rules>
