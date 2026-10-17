@@ -30,6 +30,10 @@ public final class ServiceDate {
         selected = startOfDay(day);
     }
 
+    public static boolean isToday() {
+        return selected == null || !selected.after(startOfDay(Calendar.getInstance()));
+    }
+
     /** Date in the format the API expects, e.g. 20261017. */
     public static String apiFormat() {
         return new SimpleDateFormat("yyyyMMdd", Locale.US).format(get().getTime());

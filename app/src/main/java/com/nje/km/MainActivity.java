@@ -2,12 +2,15 @@ package com.nje.km;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -33,26 +36,71 @@ public class MainActivity extends AppCompatActivity {
         WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView())
                 .setAppearanceLightStatusBars(false);
 
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.addOnBackStackChangedListener(this::updateUpButton);
+        updateUpButton();
+
         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
         bottomNav.setOnItemSelectedListener(item -> {
+            popToRoot();
             showFragment(item.getItemId() == R.id.nav_stops
                     ? new StopsFragment()
                     : new LinesFragment());
-            setTitle(item.getTitle());
             return true;
         });
+        // Tapping the current tab again goes back to its first page
+        bottomNav.setOnItemReselectedListener(item -> popToRoot());
 
+        // Vonalak is already the selected tab, so selecting it again would count as a reselect
         if (savedInstanceState == null) {
-            bottomNav.setSelectedItemId(R.id.nav_lines);
-        } else {
-            setTitle(bottomNav.getMenu().findItem(bottomNav.getSelectedItemId()).getTitle());
+            showFragment(new LinesFragment());
         }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        getOnBackPressedDispatcher().onBackPressed();
+        return true;
+    }
+
+    /** Called by the fragments when they become visible. */
+    public void setToolbarTitle(CharSequence title, @Nullable CharSequence subtitle) {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(title);
+            actionBar.setSubtitle(subtitle);
+        }
+    }
+
+    /** Opens a page on top of the current one, so back returns to it. */
+    public void openPage(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setReorderingAllowed(true)
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     private void showFragment(Fragment fragment) {
         getSupportFragmentManager()
                 .beginTransaction()
+                .setReorderingAllowed(true)
                 .replace(R.id.fragment_container, fragment)
                 .commit();
+    }
+
+    private void popToRoot() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
+    }
+
+    private void updateUpButton() {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(getSupportFragmentManager().getBackStackEntryCount() > 0);
+        }
     }
 }

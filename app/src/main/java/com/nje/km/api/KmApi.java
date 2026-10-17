@@ -1,6 +1,9 @@
 package com.nje.km.api;
 
 import com.nje.km.model.Line;
+import com.nje.km.model.PathStop;
+import com.nje.km.model.ScheduleHour;
+import com.nje.km.model.VehiclePosition;
 
 import java.util.List;
 
@@ -12,4 +15,18 @@ public interface KmApi {
 
     @GET("tracks/{date}")
     Call<List<Line>> getLines(@Path("date") String date);
+
+    // direction is 1 or 2; circular lines only have direction 1
+    @GET("routes/{date}/{lineId}/{direction}")
+    Call<List<ScheduleHour>> getLineSchedule(
+            @Path("date") String date,
+            @Path("lineId") String lineId,
+            @Path("direction") int direction);
+
+    @GET("path/{date}/{tripId}")
+    Call<List<PathStop>> getTripPath(@Path("date") String date, @Path("tripId") String tripId);
+
+    // Empty list if the trip is not running right now
+    @GET("vehicleposition/{date}/{tripId}")
+    Call<List<VehiclePosition>> getVehiclePosition(@Path("date") String date, @Path("tripId") String tripId);
 }
