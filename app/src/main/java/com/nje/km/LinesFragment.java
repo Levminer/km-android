@@ -34,7 +34,8 @@ import retrofit2.Response;
 
 public class LinesFragment extends Fragment {
 
-    private final LinesAdapter adapter = new LinesAdapter();
+    private final LinesAdapter adapter = new LinesAdapter(line ->
+            ((MainActivity) requireActivity()).openPage(LineScheduleFragment.newInstance(line)));
 
     private SwipeRefreshLayout swipeRefresh;
     private ProgressBar progress;
@@ -78,6 +79,12 @@ public class LinesFragment extends Fragment {
         if (adapter.getItemCount() == 0) {
             loadLines(true);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((MainActivity) requireActivity()).setToolbarTitle("Vonalak", null);
     }
 
     @Override

@@ -14,8 +14,15 @@ import com.nje.km.model.Line;
 
 public class LinesAdapter extends ListAdapter<Line, LinesAdapter.ViewHolder> {
 
-    public LinesAdapter() {
+    public interface OnLineClickListener {
+        void onLineClick(Line line);
+    }
+
+    private final OnLineClickListener listener;
+
+    public LinesAdapter(OnLineClickListener listener) {
         super(DIFF);
+        this.listener = listener;
     }
 
     @NonNull
@@ -31,6 +38,7 @@ public class LinesAdapter extends ListAdapter<Line, LinesAdapter.ViewHolder> {
         Line line = getItem(position);
         holder.number.setText(line.id);
         holder.name.setText(line.name);
+        holder.itemView.setOnClickListener(v -> listener.onLineClick(line));
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
