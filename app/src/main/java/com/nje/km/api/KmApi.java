@@ -3,6 +3,7 @@ package com.nje.km.api;
 import com.nje.km.model.Line;
 import com.nje.km.model.PathStop;
 import com.nje.km.model.ScheduleHour;
+import com.nje.km.model.Stop;
 import com.nje.km.model.VehiclePosition;
 
 import java.util.List;
@@ -29,4 +30,7 @@ public interface KmApi {
     // Üres lista, ha a járat éppen nem közlekedik
     @GET("vehicleposition/{date}/{tripId}")
     Call<List<VehiclePosition>> getVehiclePosition(@Path("date") String date, @Path("tripId") String tripId);
+
+    @GET("geolocs/{date}")
+    Call<List<Stop>> getStops(@Path("date") String date);
 }
