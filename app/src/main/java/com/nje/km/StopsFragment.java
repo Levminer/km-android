@@ -39,9 +39,8 @@ public class StopsFragment extends Fragment {
 
     private static final Locale HUNGARIAN = Locale.forLanguageTag("hu-HU");
 
-    private final StopsAdapter adapter = new StopsAdapter(stop -> {
-        // TODO: a megálló kocsiállásainak megnyitása
-    });
+    private final StopsAdapter adapter = new StopsAdapter(stop ->
+            ((MainActivity) requireActivity()).openPage(StopMapFragment.newInstance(stop)));
 
     private final List<Stop> allStops = new ArrayList<>();
     private String query = "";
@@ -134,6 +133,10 @@ public class StopsFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String text) {
+                // Az oldal elhagyásakor a keresőmező becsukódik, ez ne törölje a keresést
+                if (getView() == null || !getViewLifecycleOwner().getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.RESUMED)) {
+                    return true;
+                }
                 query = text;
                 showStops(true);
                 return true;

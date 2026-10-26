@@ -2,6 +2,7 @@ package com.nje.km.api;
 
 import com.nje.km.model.Line;
 import com.nje.km.model.PathStop;
+import com.nje.km.model.Platform;
 import com.nje.km.model.ScheduleHour;
 import com.nje.km.model.Stop;
 import com.nje.km.model.VehiclePosition;
@@ -33,4 +34,7 @@ public interface KmApi {
 
     @GET("geolocs/{date}")
     Call<List<Stop>> getStops(@Path("date") String date);
+
+    @GET("platforms/{date}/{stopId}")
+    Call<List<Platform>> getPlatforms(@Path("date") String date, @Path("stopId") String stopId);
 }
