@@ -177,6 +177,10 @@ public class StopMapFragment extends Fragment {
             marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
             marker.setTitle(platform.name);
             marker.setSnippet("Kocsiállás: " + platform.number);
+            marker.setOnMarkerClickListener((clicked, mapView) -> {
+                ((MainActivity) requireActivity()).openPage(StopScheduleFragment.newInstance(platform));
+                return true;
+            });
             map.getOverlays().add(marker);
         }
         map.invalidate();

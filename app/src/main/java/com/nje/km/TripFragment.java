@@ -59,10 +59,14 @@ public class TripFragment extends Fragment {
     private boolean scrolledToVehicle;
 
     public static TripFragment newInstance(String lineId, String lineName, Departure departure) {
+        return newInstance(departure.tripId, lineId + " – " + departure.hour + ":" + departure.minute, lineName);
+    }
+
+    public static TripFragment newInstance(String tripId, String title, String subtitle) {
         Bundle args = new Bundle();
-        args.putString(ARG_TRIP_ID, departure.tripId);
-        args.putString(ARG_TITLE, lineId + " – " + departure.hour + ":" + departure.minute);
-        args.putString(ARG_SUBTITLE, lineName);
+        args.putString(ARG_TRIP_ID, tripId);
+        args.putString(ARG_TITLE, title);
+        args.putString(ARG_SUBTITLE, subtitle);
 
         TripFragment fragment = new TripFragment();
         fragment.setArguments(args);

@@ -5,6 +5,7 @@ import com.nje.km.model.PathStop;
 import com.nje.km.model.Platform;
 import com.nje.km.model.ScheduleHour;
 import com.nje.km.model.Stop;
+import com.nje.km.model.StopArrival;
 import com.nje.km.model.VehiclePosition;
 
 import java.util.List;
@@ -37,4 +38,11 @@ public interface KmApi {
 
     @GET("platforms/{date}/{stopId}")
     Call<List<Platform>> getPlatforms(@Path("date") String date, @Path("stopId") String stopId);
+
+    // Egy kocsiállásra érkező járatok a megadott időponttól (HH:mm)
+    @GET("stopschedule/{date}/{from}/{platformId}")
+    Call<List<StopArrival>> getStopSchedule(
+            @Path("date") String date,
+            @Path("from") String from,
+            @Path("platformId") String platformId);
 }
